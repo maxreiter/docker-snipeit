@@ -1,0 +1,44 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: snipeit-mariadb
+    environment:
+      MARIADB_DATABASE: "snipeit"
+      MARIADB_USER: "snipeit"
+      MARIADB_PASSWORD: "snipeit"
+      MARIADB_RANDOM_ROOT_PASSWORD: true
+
+  snipeit:
+    build: ..
+    container_name: snipeit
+    depends_on:
+      - mariadb
+    environment:
+      APP_ENV: "testing"
+      APP_DEBUG: true
+      APP_URL: "http://localhost:8081"
+      APP_TIMEOUT: "America/Los_Angeles"
+      APP_LOCALE: "en-US"
+      APP_KEY: "1FF7896C456062D55CFE43B0B27DA969"
+
+      DB_HOST: "mariadb:3306"
+      DB_USERNAME: "snipeit"
+      DB_PASSWORD: "snipeit"
+      DB_DATABASE: "snipeit"
+      DB_SSL: false
+    volumes:
+      - snipeit-data:/var/www/snipeit
+
+  caddy:
+    image: caddy:latest
+    container_name: snipeit-caddy
+    depends_on:
+      - snipeit
+    ports:
+      - "8081:8081"
+    volumes:
+      - $PWD/caddy:/etc/caddy
+      - snipeit-data:/var/www/snipeit
+
+volumes:
+  snipeit-data:

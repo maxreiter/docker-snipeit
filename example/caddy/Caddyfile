@@ -1,0 +1,7 @@
+http://localhost:8081
+
+root /var/www/snipeit/public
+file_server
+php_fastcgi snipeit:9000 {
+	capture_stderr
+}
