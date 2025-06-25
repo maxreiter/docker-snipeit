@@ -3,12 +3,15 @@ FROM alpine:3.22
 # A date-time string as defined by RFC3339
 ARG BUILD_DATE
 
-LABEL org.opencontainers.image.created="$BUILD_DATE" \
+# Version of Snipe-IT to install
+ENV SNIPEIT_VERSION=v8.1.16
+
+LABEL org.opencontainers.image.created="${BUILD_DATE}" \
 	org.opencontainers.image.authors="Max Reiter <mreiter@rtc.edu>" \
 	org.opencontainers.image.url="https://github.com/maxreiter/docker-snipeit" \
 	org.opencontainers.image.documentation="https://github.com/maxreiter/docker-snipeit" \
 	org.opencontainers.image.source="https://github.com/maxreiter/docker-snipeit" \
-	org.opencontainers.image.version="8.1.16" \
+	org.opencontainers.image.version="${SNIPEIT_VERSION}" \
 	org.opencontainers.image.vendor="Max Reiter" \
 	org.opencontainers.image.license="MIT" \
 	org.opencontainers.image.title="Snipe-IT" \
